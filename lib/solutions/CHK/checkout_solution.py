@@ -7,8 +7,11 @@ class Basket:
         "B": 30,
         "C": 20,
         "D": 15,
+        "E": 40,
     }
+    # The offers are run in order, so the most attractive offer should be at the top.
     offers = [
+        {"quantity": 5, "sku": "A", "price": 200},
         {"quantity": 3, "sku": "A", "price": 130},
         {"quantity": 2, "sku": "B", "price": 45},
     ]
@@ -58,5 +61,6 @@ def checkout(skus: str) -> int:
         return basket.calculate_checkout()
     except ValueError:
         return -1
+
 
 
