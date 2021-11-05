@@ -5,7 +5,7 @@ from lib.solutions.CHK.checkout_solution import checkout
 
 class TestChk(TestCase):
     def test_checkout__invalid_sku(self):
-        self.assertEqual(-1, checkout("Z"))
+        self.assertEqual(-1, checkout("z"))
         self.assertEqual(-1, checkout("ABCD7"))
 
     def test_checkout__no_offer(self):
@@ -37,7 +37,7 @@ class TestChk(TestCase):
         self.assertEqual(220, checkout("V" * 5))
 
     def test_checkout__multi_item_offer__priority(self):
-        self.assertEqual(250, checkout("A" * 5))
+        self.assertEqual(250, checkout("A" * 6))
         self.assertEqual(330, checkout("A" * 8))
         self.assertEqual(380, checkout("A" * 9))
 
@@ -46,20 +46,19 @@ class TestChk(TestCase):
         self.assertEqual(195, checkout("EEBEECDB"))
         self.assertEqual(20, checkout("FFF"))
         self.assertEqual(20, checkout("FF"))
-        self.assertEqual(230, checkout("F" * 6 + "E" * 4 + "B" * 3))
+        self.assertEqual(230, checkout(("F" * 6) + ("E" * 4) + ("B" * 3)))
+        self.assertEqual(120, checkout("NNNM"))
+        self.assertEqual(150, checkout("RRRQ"))
+        self.assertEqual(120, checkout("UUUU"))
 
     def test_checkout__multi_offers(self):
         self.assertEqual(125, checkout("EEBBB"))
-        self.assertEqual(220, checkout("F" * 3 + "A" + 5))
+        self.assertEqual(220, checkout(("F" * 3) + ("A" * 5)))
         self.assertEqual(
             380 + 70,
-            checkout("F" * 10 + "A" * 9)
+            checkout(("F" * 10) + ("A" * 9))
         )
         self.assertEqual(
             200 + 30 + 20 + 15 + 120,
             checkout("AAEEAABBEACD")
         )
-
-
-
-
