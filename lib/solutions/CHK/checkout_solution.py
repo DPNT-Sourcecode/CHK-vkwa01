@@ -13,7 +13,7 @@ class Basket:
         "H": 10,
         "I": 35,
         "J": 60,
-        "K": 80,
+        "K": 70,
         "L": 90,
         "M": 15,
         "N": 40,
@@ -21,14 +21,14 @@ class Basket:
         "P": 50,
         "Q": 30,
         "R": 50,
-        "S": 30,
+        "S": 20,
         "T": 20,
         "U": 40,
         "V": 50,
         "W": 20,
-        "X": 90,
-        "Y": 10,
-        "Z": 50,
+        "X": 17,
+        "Y": 20,
+        "Z": 21,
     }
     # The offers are run in order, so the most attractive offer should be at the top.
     buy_x_get_y_free_offers = [
@@ -112,3 +112,4 @@ def checkout(skus: str) -> int:
         return basket.calculate_checkout()
     except ValueError:
         return -1
+
