@@ -9,16 +9,44 @@ class Basket:
         "D": 15,
         "E": 40,
         "F": 10,
+        "G": 20,
+        "H": 10,
+        "I": 35,
+        "J": 60,
+        "K": 80,
+        "L": 90,
+        "M": 15,
+        "N": 40,
+        "O": 10,
+        "P": 50,
+        "Q": 30,
+        "R": 50,
+        "S": 30,
+        "T": 20,
+        "U": 40,
+        "V": 50,
+        "W": 20,
+        "X": 90,
+        "Y": 10,
+        "Z": 50,
     }
     # The offers are run in order, so the most attractive offer should be at the top.
     buy_x_get_y_free_offers = [
         {"quantity": 2, "sku": "E", "free": "B"},
-        {"quantity": 3, "sku": "F", "free": "F"}
+        {"quantity": 3, "sku": "F", "free": "F"},
+        {"quantity": 3, "sku": "N", "free": "M"},
     ]
     # The offers are run in order, so the most attractive offer should be at the top.
     multi_item_offers = [
         {"quantity": 5, "sku": "A", "price": 200},
         {"quantity": 3, "sku": "A", "price": 130},
+        {"quantity": 2, "sku": "B", "price": 45},
+        {"quantity": 10, "sku": "H", "price": 80},
+        {"quantity": 5, "sku": "H", "price": 45},
+        {"quantity": 2, "sku": "K", "price": 150},
+        {"quantity": 5, "sku": "P", "price": 200},
+        {"quantity": 2, "sku": "B", "price": 45},
+        {"quantity": 2, "sku": "B", "price": 45},
         {"quantity": 2, "sku": "B", "price": 45},
     ]
 
@@ -82,4 +110,5 @@ def checkout(skus: str) -> int:
         return basket.calculate_checkout()
     except ValueError:
         return -1
+
 
