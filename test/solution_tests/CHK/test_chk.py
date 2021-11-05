@@ -27,3 +27,7 @@ class TestChk(TestCase):
             checkout("AACABADBB")
         )
 
+    def test_checkout__offer__priority(self):
+        self.assertEqual(250, checkout("AAAAAA"))
+
+

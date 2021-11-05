@@ -32,6 +32,20 @@ class Basket:
             The total value of offers found.
         """
         offer_value = 0
+
+        for offer in self.buy_x_get_y_free_offers:
+            quantity = offer["quantity"]
+            remove = offer["remove"]
+            sku = offer["sku"]
+            matches = self.skus.count(sku)
+            offers_found = matches // quantity
+            skus_to_remove = remove * offers_found
+            for sku_to_remove in skus_to_remove:
+                try:
+                    self.skus.remove(sku_to_remove)
+                except ValueError:
+                    pass
+
         for offer in self.multi_item_offers:
             quantity = offer["quantity"]
             price = offer["price"]
@@ -41,6 +55,7 @@ class Basket:
             offer_value += offers_found * price
             for _ in range(offers_found * quantity):
                 self.skus.remove(sku)
+
         return offer_value
 
     def calculate_checkout(self) -> int:
@@ -65,6 +80,7 @@ def checkout(skus: str) -> int:
         return basket.calculate_checkout()
     except ValueError:
         return -1
+
 
 
 
