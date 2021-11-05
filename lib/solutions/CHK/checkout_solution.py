@@ -81,15 +81,18 @@ class Basket:
                     pass
 
         for offer in self.multi_item_offers:
+            set_skus = self.skus
             quantity = offer["quantity"]
             price = offer["price"]
             skus = offer["skus"]
-            matches = {sku: self.skus.count(sku) for sku in skus if sku in}
-            matches = sum(self.skus.count(sku) for sku in skus)
+            matches_per_sku = {sku: self.skus.count(sku) for sku in skus if sku in self.skus}
+            matches = sum(matches_per_sku.values())
             offers_found = matches // quantity
             offer_value += offers_found * price
             for _ in range(offers_found * quantity):
-                self.skus.remove(sku)
+                sku_to_remove = next(sku for sku in matches_per_sku if matches_per_sku[sku] > 0)
+                self.skus.remove(sku_to_remove)
+                matches_per_sku[sku_to_remove] -= 1
 
         return offer_value
 
@@ -116,6 +119,7 @@ def checkout(skus: str) -> int:
         return basket.calculate_checkout()
     except ValueError:
         return -1
+
 
 
 
