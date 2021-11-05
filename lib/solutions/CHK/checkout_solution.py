@@ -35,6 +35,8 @@ class Basket:
         {"quantity": 2, "sku": "E", "free": "B"},
         {"quantity": 3, "sku": "F", "free": "F"},
         {"quantity": 3, "sku": "N", "free": "M"},
+        {"quantity": 3, "sku": "R", "free": "Q"},
+        {"quantity": 4, "sku": "U", "free": "U"},
     ]
     # The offers are run in order, so the most attractive offer should be at the top.
     multi_item_offers = [
@@ -45,9 +47,9 @@ class Basket:
         {"quantity": 5, "sku": "H", "price": 45},
         {"quantity": 2, "sku": "K", "price": 150},
         {"quantity": 5, "sku": "P", "price": 200},
-        {"quantity": 2, "sku": "B", "price": 45},
-        {"quantity": 2, "sku": "B", "price": 45},
-        {"quantity": 2, "sku": "B", "price": 45},
+        {"quantity": 3, "sku": "Q", "price": 80},
+        {"quantity": 3, "sku": "V", "price": 130},
+        {"quantity": 2, "sku": "V", "price": 90},
     ]
 
     def __init__(self, skus: str):
@@ -110,5 +112,6 @@ def checkout(skus: str) -> int:
         return basket.calculate_checkout()
     except ValueError:
         return -1
+
 
 

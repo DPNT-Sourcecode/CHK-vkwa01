@@ -26,6 +26,16 @@ class TestChk(TestCase):
             130 + 50 + 45 + 30 + 20 + 15,
             checkout("AACABADBB")
         )
+        self.assertEqual(80, checkout("H" * 10))
+        self.assertEqual(45, checkout("H" * 5))
+        self.assertEqual(150, checkout("KK"))
+        self.assertEqual(300, checkout("K" * 4))
+        self.assertEqual(200, checkout("P" * 5))
+        self.assertEqual(45, checkout("BB"))
+        self.assertEqual(45, checkout("BB"))
+        self.assertEqual(45, checkout("BB"))
+        self.assertEqual(45, checkout("BB"))
+        self.assertEqual(45, checkout("BB"))
 
     def test_checkout__multi_item_offer__priority(self):
         self.assertEqual(250, checkout("AAAAAA"))
@@ -50,5 +60,6 @@ class TestChk(TestCase):
             200 + 30 + 20 + 15 + 120,
             checkout("AAEEAABBEACD")
         )
+
 
 
