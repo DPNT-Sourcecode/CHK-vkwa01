@@ -3,11 +3,3 @@
 # skus = unicode string
 def checklite(skus):
     ...
-
-
-
-
-
-
-
-
