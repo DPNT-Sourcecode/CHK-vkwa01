@@ -41,16 +41,17 @@ class Basket:
     # The offers are run in order, so the most attractive offer should be at the top.
     # And the most expensive sku should be first for the buy any of X offers.
     multi_item_offers = [
-        {"quantity": 5, "sku": "A", "price": 200},
-        {"quantity": 3, "sku": "A", "price": 130},
-        {"quantity": 2, "sku": "B", "price": 45},
-        {"quantity": 10, "sku": "H", "price": 80},
-        {"quantity": 5, "sku": "H", "price": 45},
-        {"quantity": 2, "sku": "K", "price": 150},
-        {"quantity": 5, "sku": "P", "price": 200},
-        {"quantity": 3, "sku": "Q", "price": 80},
-        {"quantity": 3, "sku": "V", "price": 130},
-        {"quantity": 2, "sku": "V", "price": 90},
+        {"quantity": 5, "skus": ("A", ), "price": 200},
+        {"quantity": 3, "skus": ("A", ), "price": 130},
+        {"quantity": 2, "skus": ("B", ), "price": 45},
+        {"quantity": 10, "skus": ("H", ), "price": 80},
+        {"quantity": 5, "skus": ("H", ), "price": 45},
+        {"quantity": 2, "skus": ("K", ), "price": 150},
+        {"quantity": 5, "skus": ("P", ), "price": 200},
+        {"quantity": 3, "skus": ("Q", ), "price": 80},
+        {"quantity": 3, "skus": ("V", ), "price": 130},
+        {"quantity": 2, "skus": ("V", ), "price": 90},
+        {"quantity": 3, "skus": ("S", "T", "X", "Y", "Z"), "price": 45}
     ]
 
     def __init__(self, skus: str):
@@ -82,8 +83,8 @@ class Basket:
         for offer in self.multi_item_offers:
             quantity = offer["quantity"]
             price = offer["price"]
-            sku = offer["sku"]
-            matches = self.skus.count(sku)
+            skus = offer["skus"]
+            matches = sum(self.skus.count(sku) for sku in skus)
             offers_found = matches // quantity
             offer_value += offers_found * price
             for _ in range(offers_found * quantity):
@@ -113,5 +114,6 @@ def checkout(skus: str) -> int:
         return basket.calculate_checkout()
     except ValueError:
         return -1
+
 
 
