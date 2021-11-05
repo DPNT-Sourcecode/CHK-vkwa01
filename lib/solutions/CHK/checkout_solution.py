@@ -69,7 +69,7 @@ class Basket:
             quantity = offer["quantity"]
             remove = offer["free"]
             sku = offer["sku"]
-            matches = self.sku_dict[sku]
+            matches = self.sku_counter[sku]
             offers_found = matches // quantity
             self.sku_counter[remove] = max(0, self.sku_counter[remove] - 1)
 
@@ -82,9 +82,8 @@ class Basket:
             offer_value += offers_found * price
 
             for _ in range(offers_found * quantity):
-                sku_to_remove = next(sku for sku in matches_per_sku if matches_per_sku[sku] > 0)
-                self.skus.remove(sku_to_remove)
-                matches_per_sku[sku_to_remove] -= 1
+                sku_to_remove = next(sku for sku in skus if self.sku_counter[sku] > 0)
+                self.sku_counter[sku] -= 1
 
         return offer_value
 
@@ -130,8 +129,9 @@ class Basket:
         Returns
             The basket checkout value
         """
-        checkout_value = self._calculate_offers_and_remove_skus()
-        checkout_value += sum(self.prices[sku] for sku in self.skus)
+        checkout_value = self._process_offers()
+        # checkout_value = self._calculate_offers_and_remove_skus()
+        checkout_value += sum(self.prices[sku] * self.sku_counter[sku] for sku in self.sku_counter)
         return checkout_value
 
 
@@ -148,4 +148,5 @@ def checkout(skus: str) -> int:
         return basket.calculate_checkout()
     except ValueError:
         return -1
+
 
