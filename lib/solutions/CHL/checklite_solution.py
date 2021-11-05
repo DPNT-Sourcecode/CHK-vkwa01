@@ -32,7 +32,9 @@ class Basket:
             matches = self.skus.count(sku)
             offers_found = matches // quantity
             offer_value += offers_found * price
-            
+            for _ in range(matches * quantity):
+                self.skus.remove(sku)
+        return offer_value
 
     def calculate_checkout(self) -> int:
         """
@@ -51,6 +53,7 @@ def checklite(skus: str) -> int:
         skus: String where each letter represents an item in the basket.
     """
     ...
+
 
 
 
