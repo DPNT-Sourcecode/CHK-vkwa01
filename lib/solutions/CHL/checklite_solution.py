@@ -16,9 +16,23 @@ class Basket:
     def __init__(self, skus: str):
         if any(sku not in prices for sku in skus):
             raise ValueError(f"Invalid basket, all skus must be one of {', '.join(sku for sku in prices)}")
-        self.skus = list(skus)
+        self.skus = sorted(list(skus))
 
-    def calculate_checkout(self):
+    def _calculate_offers_and_remove_skus(self) -> int:
+        """
+        Find offers in the basket and remove them from the list of skus.
+        Returns:
+            The total value of offers found.
+        """
+        for offer in self.offers:
+            matches = 
+
+    def calculate_checkout(self) -> int:
+        """
+        Returns
+        """
+        ...
+
 
 
 # noinspection PyUnusedLocal
@@ -30,6 +44,7 @@ def checklite(skus: str) -> int:
         skus: String where each letter represents an item in the basket.
     """
     ...
+
 
 
 
