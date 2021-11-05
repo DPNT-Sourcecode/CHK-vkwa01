@@ -14,8 +14,8 @@ class Basket:
     ]
 
     def __init__(self, skus: str):
-        if any(sku not in prices for sku in skus):
-            raise ValueError(f"Invalid basket, all skus must be one of {', '.join(sku for sku in prices)}")
+        if any(sku not in self.prices for sku in skus):
+            raise ValueError(f"Invalid basket, all skus must be one of {', '.join(sku for sku in self.prices)}")
         self.skus = sorted(list(skus))
 
     def _calculate_offers_and_remove_skus(self) -> int:
@@ -56,5 +56,6 @@ def checkout(skus: str) -> int:
     try:
         basket = Basket(skus)
         return basket.calculate_checkout()
-    except ValueError:
+    except TypeError:
         return -1
+
