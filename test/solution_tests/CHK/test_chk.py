@@ -31,35 +31,35 @@ class TestChk(TestCase):
         self.assertEqual(150, checkout("KK"))
         self.assertEqual(300, checkout("K" * 4))
         self.assertEqual(200, checkout("P" * 5))
-        self.assertEqual(45, checkout("BB"))
-        self.assertEqual(45, checkout("BB"))
-        self.assertEqual(45, checkout("BB"))
-        self.assertEqual(45, checkout("BB"))
-        self.assertEqual(45, checkout("BB"))
+        self.assertEqual(80, checkout("QQQ"))
+        self.assertEqual(130, checkout("VVV"))
+        self.assertEqual(90, checkout("VV"))
+        self.assertEqual(220, checkout("V" * 5))
 
     def test_checkout__multi_item_offer__priority(self):
-        self.assertEqual(250, checkout("AAAAAA"))
-        self.assertEqual(330, checkout("AAAAAAAA"))
-        self.assertEqual(380, checkout("AAAAAAAAA"))
+        self.assertEqual(250, checkout("A" * 5))
+        self.assertEqual(330, checkout("A" * 8))
+        self.assertEqual(380, checkout("A" * 9))
 
     def test_checkout__buy_x_get_y_free(self):
         self.assertEqual(80, checkout("EEB"))
         self.assertEqual(195, checkout("EEBEECDB"))
         self.assertEqual(20, checkout("FFF"))
         self.assertEqual(20, checkout("FF"))
-        self.assertEqual(230, checkout("FFFFFFEEEEBBB"))
+        self.assertEqual(230, checkout("F" * 6 + "E" * 4 + "B" * 3))
 
     def test_checkout__multi_offers(self):
         self.assertEqual(125, checkout("EEBBB"))
-        self.assertEqual(220, checkout("FFFAAAAA"))
+        self.assertEqual(220, checkout("F" * 3 + "A" + 5))
         self.assertEqual(
             380 + 70,
-            checkout("FFFFFFFFFFAAAAAAAAA")
+            checkout("F" * 10 + "A" * 9)
         )
         self.assertEqual(
             200 + 30 + 20 + 15 + 120,
             checkout("AAEEAABBEACD")
         )
+
 
 
 
