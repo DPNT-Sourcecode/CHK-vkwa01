@@ -23,7 +23,7 @@ class TestChk(TestCase):
         self.assertEqual(175, checkout("ABABA"))
         self.assertEqual(165, checkout("ACADA"))
         self.assertEqual(
-            130 + 45 + 50 +30 + 20 + 15,
+            130 + 50 + 45 + 30 + 20 + 15,
             checkout("AACABADBB")
         )
 
@@ -35,4 +35,9 @@ class TestChk(TestCase):
         self.assertEqual(80, checkout("EEB"))
         self.assertEqual(195, checkout("EEBEECDB"))
 
-
+    def test_checkout__multi_offers(self):
+        self.assertEqual(125, checkout("EEBBB"))
+        self.assertEqual(
+            200 + 30 + 20 + 15 + 120,
+            checkout("AAEEAABBEACD")
+        )

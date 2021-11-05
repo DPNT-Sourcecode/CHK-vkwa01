@@ -80,9 +80,3 @@ def checkout(skus: str) -> int:
         return basket.calculate_checkout()
     except ValueError:
         return -1
-
-
-
-
-
-
