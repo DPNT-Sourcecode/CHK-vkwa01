@@ -8,10 +8,12 @@ class Basket:
         "C": 20,
         "D": 15,
         "E": 40,
+        "F": 10,
     }
     # The offers are run in order, so the most attractive offer should be at the top.
     buy_x_get_y_free_offers = [
-        {"quantity": 2, "sku": "E", "free": "B"}
+        {"quantity": 2, "sku": "E", "free": "B"},
+        {"quantity": 3, "sku": "F", "free": "F"}
     ]
     # The offers are run in order, so the most attractive offer should be at the top.
     multi_item_offers = [
@@ -80,3 +82,4 @@ def checkout(skus: str) -> int:
         return basket.calculate_checkout()
     except ValueError:
         return -1
+
