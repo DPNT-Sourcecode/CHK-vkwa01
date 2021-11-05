@@ -61,7 +61,34 @@ class Basket:
         if any(sku not in self.prices for sku in skus):
             raise ValueError(f"Invalid basket, all skus must be one of {', '.join(sku for sku in self.prices)}")
         self.skus = sorted(list(skus))
-        self.sku_dict = Counter(skus)
+        self.sku_counter = Counter(skus)
+
+    def _process_offers(self) -> int:
+        offer_value = 0
+        for offer in self.buy_x_get_y_free_offers:
+            quantity = offer["quantity"]
+            remove = offer["free"]
+            sku = offer["sku"]
+            matches = self.sku_dict[sku]
+            offers_found = matches // quantity
+            self.sku_counter[remove] = max(0, )
+            skus_to_remove = remove * offers_found
+            for sku in remove:
+                if self.sku_counter[sku]:
+
+        for offer in self.multi_item_offers:
+            quantity = offer["quantity"]
+            price = offer["price"]
+            skus = offer["skus"]
+            matches = sum(self.sku_counter[sku] for sku in skus)
+            offers_found = matches // quantity
+            offer_value += offers_found * price
+            for _ in range(offers_found * quantity):
+                sku_to_remove = next(sku for sku in matches_per_sku if matches_per_sku[sku] > 0)
+                self.skus.remove(sku_to_remove)
+                matches_per_sku[sku_to_remove] -= 1
+
+        return offer_value
 
     def _calculate_offers_and_remove_skus(self) -> int:
         """
@@ -123,10 +150,3 @@ def checkout(skus: str) -> int:
         return basket.calculate_checkout()
     except ValueError:
         return -1
-
-
-
-
-
-
-
