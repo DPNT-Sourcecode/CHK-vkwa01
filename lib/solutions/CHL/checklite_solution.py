@@ -24,8 +24,15 @@ class Basket:
         Returns:
             The total value of offers found.
         """
+        offer_value = 0
         for offer in self.offers:
-            matches = 
+            quantity = offer["quantity"]
+            price = offer["price"]
+            sku = offer["sku"]
+            matches = self.skus.count(sku)
+            offers_found = matches // quantity
+            offer_value += offers_found * price
+            
 
     def calculate_checkout(self) -> int:
         """
@@ -44,6 +51,7 @@ def checklite(skus: str) -> int:
         skus: String where each letter represents an item in the basket.
     """
     ...
+
 
 
 
