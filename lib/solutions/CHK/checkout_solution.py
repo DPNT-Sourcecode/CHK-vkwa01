@@ -80,14 +80,15 @@ class Basket:
             matches = sum(self.sku_counter[sku] for sku in skus)
             offers_found = matches // quantity
             offer_value += offers_found * price
-            if self.skus == ["A", "A", "A"] and skus == ("A", ):
+            if self.skus == ["B", "B"] and skus == ("B", ):
+                print(self.skus)
+                print(self.sku_counter)
                 print(offer_value)
                 print(offers_found)
-                print(price)
 
             for _ in range(offers_found * quantity):
                 sku_to_remove = next(sku for sku in skus if self.sku_counter[sku] > 0)
-                self.sku_counter[sku] -= 1
+                self.sku_counter[sku_to_remove] -= 1
 
         return offer_value
 
@@ -152,6 +153,7 @@ def checkout(skus: str) -> int:
         return basket.calculate_checkout()
     except ValueError:
         return -1
+
 
 
 
