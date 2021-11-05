@@ -84,6 +84,7 @@ class Basket:
             quantity = offer["quantity"]
             price = offer["price"]
             skus = offer["skus"]
+            matches = {sku: self.skus.count(sku) for sku in skus if sku in}
             matches = sum(self.skus.count(sku) for sku in skus)
             offers_found = matches // quantity
             offer_value += offers_found * price
@@ -95,6 +96,7 @@ class Basket:
     def calculate_checkout(self) -> int:
         """
         Returns
+            The basket checkout value
         """
         checkout_value = self._calculate_offers_and_remove_skus()
         checkout_value += sum(self.prices[sku] for sku in self.skus)
@@ -114,6 +116,7 @@ def checkout(skus: str) -> int:
         return basket.calculate_checkout()
     except ValueError:
         return -1
+
 
 
 
