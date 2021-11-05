@@ -58,6 +58,7 @@ class Basket:
         if any(sku not in self.prices for sku in skus):
             raise ValueError(f"Invalid basket, all skus must be one of {', '.join(sku for sku in self.prices)}")
         self.skus = sorted(list(skus))
+        self.sku_dict = 
 
     def _calculate_offers_and_remove_skus(self) -> int:
         """
@@ -119,6 +120,7 @@ def checkout(skus: str) -> int:
         return basket.calculate_checkout()
     except ValueError:
         return -1
+
 
 
 
