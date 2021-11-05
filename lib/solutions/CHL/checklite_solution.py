@@ -40,8 +40,9 @@ class Basket:
         """
         Returns
         """
-        ...
-
+        checkout_value = self._calculate_offers_and_remove_skus()
+        checkout_value += sum(self.prices[sku] for sku in self.skus)
+        return checkout_value
 
 
 # noinspection PyUnusedLocal
@@ -52,7 +53,11 @@ def checklite(skus: str) -> int:
     Args:
         skus: String where each letter represents an item in the basket.
     """
-    ...
+    try:
+        basket = Basket(skus)
+        return basket.calculate_checkout()
+    except ValueError:
+        return -1
 
 
 
