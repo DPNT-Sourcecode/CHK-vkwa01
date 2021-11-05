@@ -32,7 +32,7 @@ class Basket:
             matches = self.skus.count(sku)
             offers_found = matches // quantity
             offer_value += offers_found * price
-            for _ in range(matches * quantity):
+            for _ in range(offers_found * quantity):
                 self.skus.remove(sku)
         return offer_value
 
@@ -56,6 +56,7 @@ def checkout(skus: str) -> int:
     try:
         basket = Basket(skus)
         return basket.calculate_checkout()
-    except TypeError:
+    except ValueError:
         return -1
+
 
