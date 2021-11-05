@@ -39,7 +39,7 @@ class TestChk(TestCase):
         self.assertEqual(45, checkout("STX"))
         self.assertEqual(45, checkout("XYZ"))
         self.assertEqual(90, checkout("SSTTZY"))
-        self.assertEqual(220, checkout("STXYZZAAA"))
+        self.assertEqual(237, checkout("STXYZZZAAA"))
 
     def test_checkout__multi_item_offer__priority(self):
         self.assertEqual(250, checkout("A" * 6))
@@ -67,3 +67,4 @@ class TestChk(TestCase):
             200 + 30 + 20 + 15 + 120,
             checkout("AAEEAABBEACD")
         )
+

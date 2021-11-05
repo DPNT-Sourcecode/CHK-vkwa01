@@ -54,7 +54,7 @@ class Basket:
         {"quantity": 3, "skus": ("Q", ), "price": 80},
         {"quantity": 3, "skus": ("V", ), "price": 130},
         {"quantity": 2, "skus": ("V", ), "price": 90},
-        {"quantity": 3, "skus": ("S", "T", "X", "Y", "Z"), "price": 45}
+        {"quantity": 3, "skus": ("Z", "S", "T", "Y", "X"), "price": 45}
     ]
 
     def __init__(self, skus: str):
@@ -71,10 +71,7 @@ class Basket:
             sku = offer["sku"]
             matches = self.sku_dict[sku]
             offers_found = matches // quantity
-            self.sku_counter[remove] = max(0, )
-            skus_to_remove = remove * offers_found
-            for sku in remove:
-                if self.sku_counter[sku]:
+            self.sku_counter[remove] = max(0, self.sku_counter[remove] - 1)
 
         for offer in self.multi_item_offers:
             quantity = offer["quantity"]
@@ -83,6 +80,7 @@ class Basket:
             matches = sum(self.sku_counter[sku] for sku in skus)
             offers_found = matches // quantity
             offer_value += offers_found * price
+
             for _ in range(offers_found * quantity):
                 sku_to_remove = next(sku for sku in matches_per_sku if matches_per_sku[sku] > 0)
                 self.skus.remove(sku_to_remove)
@@ -150,3 +148,4 @@ def checkout(skus: str) -> int:
         return basket.calculate_checkout()
     except ValueError:
         return -1
+
