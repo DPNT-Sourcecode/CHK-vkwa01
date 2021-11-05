@@ -60,37 +60,7 @@ class Basket:
     def __init__(self, skus: str):
         if any(sku not in self.prices for sku in skus):
             raise ValueError(f"Invalid basket, all skus must be one of {', '.join(sku for sku in self.prices)}")
-        self.skus = sorted(list(skus))
         self.sku_counter = Counter(skus)
-
-    def _process_offers(self) -> int:
-        offer_value = 0
-        for offer in self.buy_x_get_y_free_offers:
-            quantity = offer["quantity"]
-            remove = offer["free"]
-            sku = offer["sku"]
-            matches = self.sku_counter[sku]
-            offers_found = matches // quantity
-            self.sku_counter[remove] = max(0, self.sku_counter[remove] - 1)
-
-        for offer in self.multi_item_offers:
-            quantity = offer["quantity"]
-            price = offer["price"]
-            skus = offer["skus"]
-            matches = sum(self.sku_counter[sku] for sku in skus)
-            offers_found = matches // quantity
-            offer_value += offers_found * price
-            if self.skus == ["B", "B"] and skus == ("B", ):
-                print(self.skus)
-                print(self.sku_counter)
-                print(offer_value)
-                print(offers_found)
-
-            for _ in range(offers_found * quantity):
-                sku_to_remove = next(sku for sku in skus if self.sku_counter[sku] > 0)
-                self.sku_counter[sku_to_remove] -= 1
-
-        return offer_value
 
     def _calculate_offers_and_remove_skus(self) -> int:
         """
@@ -99,33 +69,25 @@ class Basket:
             The total value of offers found.
         """
         offer_value = 0
-
         for offer in self.buy_x_get_y_free_offers:
             quantity = offer["quantity"]
             remove = offer["free"]
             sku = offer["sku"]
-            matches = self.skus.count(sku)
+            matches = self.sku_counter[sku]
             offers_found = matches // quantity
-            skus_to_remove = remove * offers_found
-            for sku_to_remove in skus_to_remove:
-                try:
-                    self.skus.remove(sku_to_remove)
-                except ValueError:
-                    pass
+            self.sku_counter[remove] = max(0, self.sku_counter[remove] - offers_found)
 
         for offer in self.multi_item_offers:
-            set_skus = self.skus
             quantity = offer["quantity"]
             price = offer["price"]
             skus = offer["skus"]
-            matches_per_sku = {sku: self.skus.count(sku) for sku in skus if sku in self.skus}
-            matches = sum(matches_per_sku.values())
+            matches = sum(self.sku_counter[sku] for sku in skus)
             offers_found = matches // quantity
             offer_value += offers_found * price
+
             for _ in range(offers_found * quantity):
-                sku_to_remove = next(sku for sku in matches_per_sku if matches_per_sku[sku] > 0)
-                self.skus.remove(sku_to_remove)
-                matches_per_sku[sku_to_remove] -= 1
+                sku_to_remove = next(sku for sku in skus if self.sku_counter[sku] > 0)
+                self.sku_counter[sku_to_remove] -= 1
 
         return offer_value
 
@@ -134,8 +96,7 @@ class Basket:
         Returns
             The basket checkout value
         """
-        checkout_value = self._process_offers()
-        # checkout_value = self._calculate_offers_and_remove_skus()
+        checkout_value = self._calculate_offers_and_remove_skus()
         checkout_value += sum(self.prices[sku] * self.sku_counter[sku] for sku in self.sku_counter)
         return checkout_value
 
@@ -153,6 +114,7 @@ def checkout(skus: str) -> int:
         return basket.calculate_checkout()
     except ValueError:
         return -1
+
 
 
 
