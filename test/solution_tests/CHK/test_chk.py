@@ -30,6 +30,7 @@ class TestChk(TestCase):
     def test_checkout__multi_item_offer__priority(self):
         self.assertEqual(250, checkout("AAAAAA"))
         self.assertEqual(330, checkout("AAAAAAAA"))
+        self.assertEqual(380, checkout("AAAAAAAAA"))
 
     def test_checkout__buy_x_get_y_free(self):
         self.assertEqual(80, checkout("EEB"))
@@ -38,11 +39,16 @@ class TestChk(TestCase):
         self.assertEqual(20, checkout("FF"))
         self.assertEqual(230, checkout("FFFFFFEEEEBBB"))
 
-
     def test_checkout__multi_offers(self):
         self.assertEqual(125, checkout("EEBBB"))
+        self.assertEqual(220, checkout("FFFAAAAA"))
+        self.assertEqual(
+            380 + 70,
+            checkout("FFFFFFFFFFAAAAAAAAA")
+        )
         self.assertEqual(
             200 + 30 + 20 + 15 + 120,
             checkout("AAEEAABBEACD")
         )
+
 
