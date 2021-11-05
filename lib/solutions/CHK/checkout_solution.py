@@ -49,7 +49,7 @@ class Basket:
         {"quantity": 2, "skus": ("B", ), "price": 45},
         {"quantity": 10, "skus": ("H", ), "price": 80},
         {"quantity": 5, "skus": ("H", ), "price": 45},
-        {"quantity": 2, "skus": ("K", ), "price": 150},
+        {"quantity": 2, "skus": ("K", ), "price": 120},
         {"quantity": 5, "skus": ("P", ), "price": 200},
         {"quantity": 3, "skus": ("Q", ), "price": 80},
         {"quantity": 3, "skus": ("V", ), "price": 130},
@@ -114,6 +114,7 @@ def checkout(skus: str) -> int:
         return basket.calculate_checkout()
     except ValueError:
         return -1
+
 
 
 

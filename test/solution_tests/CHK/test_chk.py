@@ -28,8 +28,8 @@ class TestChk(TestCase):
         )
         self.assertEqual(80, checkout("H" * 10))
         self.assertEqual(45, checkout("H" * 5))
-        self.assertEqual(150, checkout("KK"))
-        self.assertEqual(300, checkout("K" * 4))
+        self.assertEqual(120, checkout("KK"))
+        self.assertEqual(240, checkout("K" * 4))
         self.assertEqual(200, checkout("P" * 5))
         self.assertEqual(80, checkout("QQQ"))
         self.assertEqual(130, checkout("VVV"))
@@ -67,4 +67,5 @@ class TestChk(TestCase):
             200 + 30 + 20 + 15 + 120,
             checkout("AAEEAABBEACD")
         )
+
 
